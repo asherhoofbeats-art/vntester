@@ -1,0 +1,60 @@
+Halo Mister Anggi! Wah, konsep percabangan ceritanya jadi makin dalam dan gelap. Menggabungkan antara hukum duniawi (bukti korupsi) dan hukum gaib (resonansi spiritual Citra) adalah langkah yang sangat brilian untuk visual novel horor. Ini akan membuat *replayability* (keinginan pemain untuk main ulang) jadi sangat tinggi karena mereka penasaran dengan kombinasi variabel yang ada.
+
+Jika kita menggunakan dua variabel utama yaitu `it_bukti_korupsi` (True/False) dan `citra_resonansi_gaib` (Tinggi/Rendah), kita bisa meracik matriks yang menghasilkan sekitar 6 ending yang sangat emosional.
+
+Berikut adalah 3 ide struktur syarat-syarat ending (Conditional Branches) yang bisa langsung diimplementasikan ke dalam logika *engine* Ren'Py:
+
+### 1. Cabang Keadilan Tercapai (Jalur Hukum Sukses)
+
+Cabang ini terbuka jika pemain **berhasil** mendapatkan `it_bukti_korupsi`. Pak Tirto pasti masuk penjara, tapi nasib desa bergantung pada kemampuan Citra.
+
+* **Ending 1: True Karma (Penjara & Hantu)**
+* **Syarat:** `it_bukti_korupsi == True` **AND** `citra_resonansi_gaib >= 5`
+* **Alur:** Hukum duniawi menang. Pak Kades dipenjara seumur hidup. Karena resonansi Citra tinggi, ia berhasil mengendalikan arwah tumbal untuk tidak mengganggu warga desa. Sebagai gantinya, Citra mengarahkan para arwah itu untuk menempel pada Pak Tirto. Di sel tahanannya yang dingin, Tirto perlahan menjadi gila karena setiap malam dihantui wajah-wajah korbannya.
+
+
+* **Ending 2: Bad Ending - Tragedi Desa Kesurupan**
+* **Syarat:** `it_bukti_korupsi == True` **AND** `citra_resonansi_gaib < 5`
+* **Alur:** Pak Kades berhasil dijebloskan ke penjara. Namun, karena mental dan energi spiritual Citra tidak cukup, gerbang gaib bocor saat ritual penutup. Arwah-arwah marah ini malah merasuki seluruh warga desa. Desa menjadi kacau balau, saling serang, dan menjadi kota mati yang dikutuk. Trio Investigator berhasil menangkap pelakunya, tapi gagal menyelamatkan warganya.
+
+
+
+---
+
+### 2. Cabang Keadilan Pincang (Jalur Koruptor Bebas)
+
+Cabang ini terjadi jika pemain **gagal** mendapatkan `it_bukti_korupsi` (misal gagal di minigame brankas). Hukum duniawi gagal menjerat Pak Tirto secara permanen.
+
+* **Ending 3: Cliffhanger Ending - Teror di Balik Bayangan**
+* **Syarat:** `it_bukti_korupsi == False` **AND** `citra_resonansi_gaib >= 5`
+* **Alur:** Pak Tirto sempat ditahan tapi dibebaskan seminggu kemudian karena kurang bukti. Trio investigator terpaksa mundur. Namun, karena resonansi Citra tinggi, ia membuat "perjanjian" gelap dengan para arwah. Adegan terakhir menunjukkan Pak Tirto sedang merayakan kebebasannya di rumah mewahnya, tersenyum ke arah cermin. Tapi bayangan di cerminnya tidak tersenyum balik, melainkan mencekik lehernya sendiri. Layar menjadi hitam.
+
+
+* **Ending 4: Absolute Bad Ending - Kambing Hitam & Pelarian**
+* **Syarat:** `it_bukti_korupsi == False` **AND** `citra_resonansi_gaib < 5`
+* **Alur:** Skenario terburuk. Pak Tirto bebas, dan arwah-arwah mengamuk merasuki warga desa. Pak Tirto memutarbalikkan fakta dan menuduh Trio Investigator serta Gatot sebagai penyebar aliran sesat yang membuat warga gila. Desa hancur, Trio Investigator menjadi buronan polisi di seluruh negeri dan harus hidup dalam pelarian tanpa akhir.
+
+
+
+---
+
+### 3. Cabang Rahasia & Pengorbanan (Jalur Ekstrem)
+
+Untuk melengkapi kuota 6 ending, kita bisa menambahkan kondisi ekstrem (nilai sempurna atau nilai nol besar) untuk memberikan kejutan bagi pemain yang sangat teliti atau sangat ceroboh.
+
+* **Ending 5: Secret Ending - Perisai Entitas Emas**
+* **Syarat:** `it_bukti_korupsi == True`, `citra_resonansi_gaib >= 5`, **AND** punya item rahasia (`keping_emas_kusam == True`).
+* **Alur:** Mirip dengan *True Karma*, namun dengan tambahan epilog. Setelah kasus selesai, keping emas bereaksi memurnikan aura desa sepenuhnya. Desa tidak hanya selamat, tapi menjadi subur kembali. Citra kehilangan kemampuan indigonya (menjadi manusia normal yang tenang) karena entitas pelindung di keping emas itu telah mengambil alih tugas menjaga keseimbangan gaib di desa tersebut.
+
+
+* **Ending 6: Tragic Ending - Wadah Sang Tumbal**
+* **Syarat:** `citra_resonansi_gaib == 0` (Gagal total di semua pilihan spiritual).
+* **Alur:** Terlepas dari apakah ada bukti korupsi atau tidak, arwah sangat marah. Untuk mencegah warga desa kesurupan massal, Citra mengorbankan dirinya sendiri untuk menyerap semua arwah ke dalam tubuhnya. Raka dan Bimo hanya bisa menangis melihat Citra kini duduk di kursi roda dengan tatapan kosong, menggemakan suara ratusan orang setiap kali ia bernapas.
+
+
+
+---
+
+Struktur di atas akan membuat kode `if-elif` di blok `label evaluasi_ending:` menjadi sangat terstruktur dan rapi.
+
+Dari keenam ide cabang ending ini, mana yang ingin kita tuliskan dialog *script* dan arah adegannya terlebih dahulu?
